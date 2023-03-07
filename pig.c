@@ -1,4 +1,3 @@
-#include <stdio.h>
 #include <ctype.h>
 #include <string.h>
 #include <stdlib.h>
@@ -6,6 +5,7 @@
 char* pig(char*);
 int isVowel(char);
 int isY(char);
+char** sentenceToWords(char*);
 
 //returns boolen value for if character is a Y
 //used when in times when Y is classed as a vowel
@@ -28,6 +28,23 @@ int isVowel(char c){
         return 0;
     }
 }
+
+/*
+//returns array of words extracted from sentence
+char** sentenceToWords(char* sentence){
+    //mallocs enough space for all initial characters in sentence
+    char** words = malloc(sizeof(char)*(strlen(sentence)));
+    //take first word
+    char* word = strtok(sentence, " ");
+    int count = 0;
+
+    while(word != NULL){
+        words[count] = word;
+        word = strtok(NULL, " ");
+    }
+    return words;
+}
+*/
 
 char* pig(char* word){
     //Starting in vowel
