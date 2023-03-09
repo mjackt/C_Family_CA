@@ -4,27 +4,28 @@
 
 int main(){
     int i;
-    int greekLen = 7;
-    int size = sizeof(int);
-    int greek[] = {1,2,3,4,5,6,7};
+    int greekLen = 12;
+    //Need to make all strings uniform size
+    int size = sizeof(char*);
+    char * greek [] = {"atlas","bee","charlie","denver","echo","fry","ghana","hoist","iguana","jam","kite","lemon"};
 
-    riffle(greek, greekLen, size, 4);
 
+    riffle(greek, greekLen, size, 10);
 
-    int charLen = 12;
-    size = sizeof(char);
-    char list[] = {'a','b','c','d','e','f','g','h','i','j','k','l'};
-
-    riffle(list, charLen, size, 4);
-    
     for(i=0;i<greekLen;i++){
-        printf(" %d ",greek[i]);
+        printf(" %s ",greek[i]);
     }
 
+    printf("\n");
+
+    int charLen = 11;
+    size = sizeof(char);
+    char list[] = {'a','b','c','d','e','f','g','h','i','j','k'};
+
+    riffle(list, charLen, size, 4);
     
     for(i=0;i<charLen;i++){
         printf(" %c ",list[i]);
     }
-    
     return 0;
 }
