@@ -10,22 +10,24 @@ int main(){
     char * greek [] = {"atlas","bee","charlie","denver","echo","fry","ghana","hoist","iguana","jam","kite","lemon"};
 
 
-    riffle(greek, greekLen, size, 10);
+    int result = check_shuffle(greek, greekLen, size, &cmp_str);
 
     for(i=0;i<greekLen;i++){
         printf(" %s ",greek[i]);
     }
+    printf("\nResult: %d",result);
 
     printf("\n");
 
-    int charLen = 11;
-    size = sizeof(char);
-    char list[] = {'a','b','c','d','e','f','g','h','i','j','k'};
+    int len = 7;
+    size = sizeof(int);
+    int intList[] = {1,2,3,4,5,6,7};
 
-    riffle(list, charLen, size, 4);
+    result = check_shuffle(intList, len, size, &cmp_int);
     
-    for(i=0;i<charLen;i++){
-        printf(" %c ",list[i]);
+    for(i=0;i<len;i++){
+        printf(" %d ",intList[i]);
     }
+    printf("\nResult: %d",result);
     return 0;
 }
