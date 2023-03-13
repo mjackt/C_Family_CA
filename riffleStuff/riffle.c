@@ -5,7 +5,91 @@
 
 void riffle_once(void*, int, int, void*);
 void riffle(void*, int, int, int);
+int cmp_int(void*, void*);
+int cmp_str(void*, void*);
+int check_shuffle(void*, int, int, int (*cmp)(void*, void*));
 
+/**
+ * Function calls a riffle shuffle. Then checks whether the items after the shuffle match the items at the start of the shuffle.
+ * @param L -- Pointer to array to shuffle
+ * @param len -- Length of L
+ * @param size -- Size of type stored by L in bytes
+ * @param cmp -- Compare function that returns 0 if equal. Anything else if not.
+ * @return 0 if shuffle is invalid. 1 if shuffle is valid.
+ */
+int check_shuffle(void *L, int len,int size, int (*cmp)(void *, void *)){
+    //Array storing state of L before shuffling. Used later to compare
+    void* preCopy = malloc(size*len);
+    memmove(preCopy,L,size*len);
+
+    riffle(L,len,size,1);
+
+    void* preCopyIncrement = preCopy;
+
+    //When uncommented should produce 0 return
+    //void* not = malloc(size*len);
+    //memmove(preCopy,not,size*len);
+
+    void* LIncrement = L;
+    int i;
+    int j;
+    int found = 1;
+    //Takes an item in preCopy and looks for it in L. Does this for every item in preCopy.
+    //If an item cannot be found it means the shuffle is invalid so 0 is returned.
+    for(i=0;i<len;i++){
+        found = 1;
+        LIncrement = L;
+        for (j=0;j<len;j++){
+            if (cmp(preCopyIncrement,LIncrement) == 0){
+                found = 0;
+                j=len;
+            }
+            LIncrement = LIncrement + size;
+        }
+        if (found==1){
+            free(preCopy);
+            return 0;
+        }
+        preCopyIncrement = preCopyIncrement + size;
+    }
+
+    free(preCopy);
+    return 1;
+}
+
+/**
+ * Function compares two integers
+ * @param first -- An integer
+ * @param second -- An integer
+ * @return 0 if equal. 1 if first>second. -1 if first<second
+ */
+int cmp_int(void* first, void* second){
+    int a = *(int*)first;
+    int b = *(int*)second;
+    if(a<b){
+        return -1;
+    }
+    if(a>b){
+        return 1;
+    }
+    if (a==b){
+        return 0;
+    }
+}
+
+/**
+ * Function compares two strings
+ * @param first -- A string
+ * @param second -- A string
+ * @return 0 if equal. 1 if first>second. -1 if first<second
+ */
+int cmp_str(void* first, void* second){
+    char* str1 =  (char *)first;
+    char* str2 =  (char *)second;
+    int result = strcmp(str1,str2);
+
+    return result;
+}
 
 void riffle(void *L, int len, int size, int N){
     int i;
