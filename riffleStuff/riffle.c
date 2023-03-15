@@ -35,6 +35,13 @@ float average_quality(int N, int shuffles, int trials){
     return avgQual;
 }
 
+/**
+ * Function measures the quality of a shuffle on an array between 0 and 1
+ * 0.5 represents the most shuffled
+ * @param numbers -- Pointer to int array to measure quality
+ * @param len -- Length of numbers
+ * @return float between 0 and 1 to measure quality
+ */
 float quality(int* numbers, int len){
     //Prevents division by 0
     if(len==1 || len ==0){
@@ -65,7 +72,7 @@ int check_shuffle(void *L, int len,int size, int (*cmp)(void *, void *)){
     void* preCopy = malloc(size*len);
     memmove(preCopy,L,size*len);
 
-    riffle(L,len,size,50);
+    riffle(L,len,size,5);
 
     void* preCopyIncrement = preCopy;
 

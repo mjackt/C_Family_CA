@@ -7,13 +7,21 @@ int isVowel(char);
 int isY(char);
 char** sentenceToWords(char*);
 
-//returns boolen value for if character is a Y
-//used when in times when Y is classed as a vowel
+/**
+ * Function checks if a char is the letter y
+ * @param c -- char to test
+ * @return 0 if c is 'y'. 1 if not
+ */
 int isY(char c){
     int Y = (c=='y' || c=='Y');
     return Y;
 }
 
+/**
+ * Function checks if a letter is a vowel
+ * @param c -- char to test
+ * @return 0 if c is a vowel. 1 if not
+ */
 int isVowel(char c){
     //true if variable c is a lowercase vowel
     int lowercaseVowel = (c == 'a' || c == 'e' || c == 'i' || c == 'o' || c == 'u');
@@ -29,23 +37,11 @@ int isVowel(char c){
     }
 }
 
-/*
-//returns array of words extracted from sentence
-char** sentenceToWords(char* sentence){
-    //mallocs enough space for all initial characters in sentence
-    char** words = malloc(sizeof(char)*(strlen(sentence)));
-    //take first word
-    char* word = strtok(sentence, " ");
-    int count = 0;
-
-    while(word != NULL){
-        words[count] = word;
-        word = strtok(NULL, " ");
-    }
-    return words;
-}
-*/
-
+/**
+ * Function that pigs a singular word
+ * @param word -- a string to pig
+ * @return The pigged string
+ */
 char* pig(char* word){
     //Starting in vowel
     if (isVowel(*word)==1){

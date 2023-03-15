@@ -1,6 +1,9 @@
 #include "pig.c"
 #include <stdio.h>
 
+/**
+ * Main will translate and output the preset words
+ */
 int main(){
     //array of all examples to translate
     char toPig[7][8]={"happy","duck","glove","evil","eight","yowler","crystal"};

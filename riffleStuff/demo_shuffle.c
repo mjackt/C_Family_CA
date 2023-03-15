@@ -1,6 +1,9 @@
 #include <stdio.h>
 #include "riffle.c"
 
+/**
+ * Main will print the result of shuffling the two preset arrays
+ */
 int main(){
     int i;
     
@@ -8,6 +11,14 @@ int main(){
     int len = 20;
     int size = sizeof(int);
     int intList[] = {1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20};
+
+    printf("\nBefore: ");
+
+    for(i=0;i<len;i++){
+        printf(" %d ",intList[i]);
+    }
+
+    printf("\nAfter : ");
 
     int result = check_shuffle(intList, len, size, &cmp_int);
     
@@ -22,6 +33,14 @@ int main(){
     int greekLen = 12;
     size = sizeof(char*);
     char * greek [] = {"alpha","beta","gamma","delta","epsilon","zeta","eta","theta","iota","kappa","lambda","mu"};
+
+    printf("\nBefore: ");
+
+    for(i=0;i<greekLen;i++){
+        printf(" %s ",greek[i]);
+    }
+
+    printf("\nAfter : ");
 
     result = check_shuffle(greek, greekLen, size, &cmp_str);
 

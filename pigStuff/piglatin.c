@@ -3,8 +3,12 @@
 #include "pig.c"
 #include <stdio.h>
 #include <string.h>
-#include <stdlib.h>    
+#include <stdlib.h>
+#include <ctype.h>
 
+/**
+ * Main will continuously ask for an input and output the corresponding piglatin translation until a blank line is entered
+ */
 int main(void)
 {
     //char sentence[200];
@@ -15,10 +19,17 @@ int main(void)
         printf("\nEnter sentence: ");
         fgets(buffer, sizeof(buffer), stdin);
 
+        //Checks if buffer's first symbol is a \n. If it is then a blank line has been entered
+        //Therefore time to end the program
         if (strcmp(buffer,"\n")==0){
             printf("termiated");
             loop=1;
             return 0;
+        }
+
+        //Converts buffer string to lowercase
+        for(int i = 0; buffer[i]; i++){
+            buffer[i] = tolower(buffer[i]);
         }
 
         int len = strlen(buffer);
