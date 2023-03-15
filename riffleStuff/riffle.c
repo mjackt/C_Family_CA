@@ -8,6 +8,48 @@ void riffle(void*, int, int, int);
 int cmp_int(void*, void*);
 int cmp_str(void*, void*);
 int check_shuffle(void*, int, int, int (*cmp)(void*, void*));
+float quality(int*, int);
+float average_quality(int, int, int);
+
+//What's this meant to return??????
+float average_quality(int N, int shuffles, int trials){
+    srand(time(NULL));
+    int i;
+    float qualSum = 0.0;
+    //Loops for each trial
+    for(i=0;i<trials;i++){
+        int* numbers = malloc(sizeof(int)*N);
+        int j;
+        //Loop to create array of N ints
+        for(j=0;j<N;j++){
+            numbers[j]=j;
+        }
+
+        riffle(numbers,N,sizeof(int),shuffles);
+        float qual = quality(numbers, N);
+        qualSum = qualSum + qual;
+        free(numbers);
+    }
+
+    float avgQual = qualSum/trials;
+    return avgQual;
+}
+
+float quality(int* numbers, int len){
+    //Prevents division by 0
+    if(len==1 || len ==0){
+        return 1.0;
+    }
+    int i;
+    int qualCount = 0;
+    for(i=1;i<len;i++){
+        if(numbers[i]>numbers[i-1]){
+            qualCount = qualCount + 1;
+        }
+    }
+    float qnum = (float)qualCount/(float)(len-1);
+    return qnum;
+}
 
 /**
  * Function calls a riffle shuffle. Then checks whether the items after the shuffle match the items at the start of the shuffle.
@@ -18,11 +60,12 @@ int check_shuffle(void*, int, int, int (*cmp)(void*, void*));
  * @return 0 if shuffle is invalid. 1 if shuffle is valid.
  */
 int check_shuffle(void *L, int len,int size, int (*cmp)(void *, void *)){
+    srand(time(NULL));
     //Array storing state of L before shuffling. Used later to compare
     void* preCopy = malloc(size*len);
     memmove(preCopy,L,size*len);
 
-    riffle(L,len,size,1);
+    riffle(L,len,size,50);
 
     void* preCopyIncrement = preCopy;
 
@@ -51,6 +94,27 @@ int check_shuffle(void *L, int len,int size, int (*cmp)(void *, void *)){
             return 0;
         }
         preCopyIncrement = preCopyIncrement + size;
+    }
+
+    //Takes an item in L and looks for it in preCopy. Does this for every item in preCopy.
+    //If an item cannot be found it means the shuffle is invalid so 0 is returned.
+    //Just an inverse of above search
+    LIncrement = L;
+    for(i=0;i<len;i++){
+        found = 1;
+        preCopyIncrement = preCopy;
+        for (j=0;j<len;j++){
+            if (cmp(LIncrement,preCopyIncrement) == 0){
+                found = 0;
+                j=len;
+            }
+            preCopyIncrement = preCopyIncrement + size;
+        }
+        if (found==1){
+            free(preCopy);
+            return 0;
+        }
+        LIncrement = LIncrement + size;
     }
 
     free(preCopy);
@@ -91,6 +155,13 @@ int cmp_str(void* first, void* second){
     return result;
 }
 
+/**
+ * Function performs N number of riffle shuffles
+ * @param L -- Pointer to head of array to be shuffled
+ * @param len -- Length of array to be shuffled
+ * @param size -- Size of object type in array
+ * @param N -- Number of riffles to perform
+ */
 void riffle(void *L, int len, int size, int N){
     int i;
     void* work = malloc(size * len);
@@ -101,6 +172,13 @@ void riffle(void *L, int len, int size, int N){
     free(work);
 }
 
+/**
+ * Function performs a singular riffle shuffle
+ * @param L -- Pointer to head of array to be shuffled
+ * @param len -- Length of array to be shuffled
+ * @param size -- Size of object type in array
+ * @param work -- Pointer to head of an array the same length of L. To be used as workspace
+ */
 void riffle_once(void *L, int len, int size, void *work){
     //Increment void pointer with size of thing
     //L will always remain pointer to start of main list
@@ -128,7 +206,6 @@ void riffle_once(void *L, int len, int size, void *work){
     int loop=0;
 
     //While loop continues randomly adding from each pile until one pile is empty
-    srand(time(NULL));
     while(AAdds < floatHalf && BAdds < floatHalf){
         int choice = rand() % 2;
         if (choice==0){
