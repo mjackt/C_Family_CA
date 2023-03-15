@@ -1,19 +1,19 @@
 
-1 Shuffles -- Average Quality: 0.756463
-2 Shuffles -- Average Quality: 0.640136
-3 Shuffles -- Average Quality: 0.584354
-4 Shuffles -- Average Quality: 0.565986
-5 Shuffles -- Average Quality: 0.536054
-6 Shuffles -- Average Quality: 0.525850
-7 Shuffles -- Average Quality: 0.507483
-8 Shuffles -- Average Quality: 0.508163
-9 Shuffles -- Average Quality: 0.514966
-10 Shuffles -- Average Quality: 0.506122
-11 Shuffles -- Average Quality: 0.508163
-12 Shuffles -- Average Quality: 0.502041
-13 Shuffles -- Average Quality: 0.497959
-14 Shuffles -- Average Quality: 0.505442
-15 Shuffles -- Average Quality: 0.500000
+1 Shuffles -- Average Quality: 0.762585
+2 Shuffles -- Average Quality: 0.646939
+3 Shuffles -- Average Quality: 0.573469
+4 Shuffles -- Average Quality: 0.540136
+5 Shuffles -- Average Quality: 0.530612
+6 Shuffles -- Average Quality: 0.519728
+7 Shuffles -- Average Quality: 0.500000
+8 Shuffles -- Average Quality: 0.503401
+9 Shuffles -- Average Quality: 0.506122
+10 Shuffles -- Average Quality: 0.500680
+11 Shuffles -- Average Quality: 0.482313
+12 Shuffles -- Average Quality: 0.498639
+13 Shuffles -- Average Quality: 0.499320
+14 Shuffles -- Average Quality: 0.501361
+15 Shuffles -- Average Quality: 0.497279
 
 Based on these results I would say that 6 shuffles is probably the best number as this is the point where the shuffle quality normally reaches 0.5.
 If you want to be extra sure the list is shuffled then you could go to 7 or even 8 shuffles but I believe 6 is sufficient.
