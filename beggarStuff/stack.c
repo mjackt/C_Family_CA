@@ -35,8 +35,7 @@ int pop(Stack* s){
 
 int peekStack(Stack* s){
     if(s->size==0){
-        printf("Stack is Empty\n");
-        exit(-1);
+        return -1;
     }
     /* Return the element which is at the top*/
     return s->elements[s->top];
