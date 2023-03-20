@@ -1,10 +1,65 @@
 #include <stdio.h>
 #include "queue.c"
 #include "stack.c"
+#include "../riffleStuff/riffle.c"
 
 int beggar(int,int*,int);
 int finished(Queue**,int);
+void talk(Queue**,Stack*,int,int,int,int);
+int* take_turn(Queue*, Stack*);
 
+void talk(Queue** players,Stack* pile, int Nplayers, int turn, int nextPlayer, int rewardee){
+    printf("Turn %d:\n",turn);
+    printf("Pile");
+    printStack(pile);
+    printf("  <-- Top\n");
+
+    int k;
+    for(k=0;k<Nplayers;k++){
+        if(k==nextPlayer){
+            printf("*   %d: ",k);
+        }
+        else{
+            printf("    %d: ",k);
+        }
+        printQueue(players[k]);
+        printf("\n");
+    }
+    
+    if(peekStack(pile)<11){
+        printf("\t Player %d playing: %d\n",nextPlayer,peekQueue(players[nextPlayer]));
+        if(getQueueSize(players[nextPlayer])==1){
+            printf("##### Player %d out of cards #####\n",nextPlayer);
+        }
+    }
+    else{
+        int escape = 0;
+        int penCount = peekStack(pile)-10;
+        printf("\t%d penatly cards:\n",penCount);
+        int i;
+        int newCard = peekQueue(players[nextPlayer]);
+        for (i=0;i<penCount;i++){
+            printf("\tPlayer %d playing: %d\n",nextPlayer,newCard);
+            
+            //If they are out of cards then break
+            if(i == players[nextPlayer]->size - 1){
+                printf("##### Player %d out of cards #####\n",nextPlayer);
+                break;
+            }
+            if(newCard>10){
+                printf("\t--penalty escaped --\n");
+                escape = 1;
+                break;
+            }
+
+            newCard = qGetNth(players[nextPlayer],i+1);
+        }
+    if(escape==0){
+        printf("Pile going to player %d\n",rewardee);
+    }
+    }
+    printf("\n");
+}
 //If -1 returned player is out
 int* take_turn(Queue* player,Stack* pile){
     if (getQueueSize(player)==0){
@@ -15,7 +70,7 @@ int* take_turn(Queue* player,Stack* pile){
 
     //For no reward an array with just 0 in it is returned as 0 can never be a card
     if (pile->size==0){
-        printf("\tPlayer playing: %d\n",newCard);
+        //printf("\tPlayer playing: %d\n",newCard);
         push(pile,newCard);
         int* reward = malloc(sizeof(int));
         reward[0]=0;
@@ -23,7 +78,7 @@ int* take_turn(Queue* player,Stack* pile){
     }
 
     if (peekStack(pile)<11){
-        printf("\tPlayer playing: %d\n",newCard);
+        //printf("\tPlayer playing: %d\n",newCard);
         push(pile,newCard);
         int* reward = malloc(sizeof(int));
         reward[0]=0;
@@ -32,13 +87,13 @@ int* take_turn(Queue* player,Stack* pile){
 
     else{
         int penCount = peekStack(pile)-10;
-        printf("Player now paying %d penatly cards\n",penCount);
+        //printf("Player now paying %d penatly cards\n",penCount);
         int i;
         for (i=0;i<penCount;i++){
-            printf("\t Player playing: %d\n",newCard);
+            //printf("\t Player playing: %d\n",newCard);
             push(pile,newCard);
             if(newCard>10){
-                printf("--penalty escaped --\n");
+                //printf("--penalty escaped --\n");
                 int* reward = malloc(sizeof(int));
                 reward[0]=0;
                 return reward;
@@ -83,6 +138,8 @@ int finished(Queue** players,int Nplayers){
 }
 
 int beggar(int Nplayers, int *deck, int talkative){
+    srand(time(NULL));
+    riffle(deck,52,sizeof(int),7);
     Queue* players[Nplayers];
     int i;
 
@@ -104,10 +161,12 @@ int beggar(int Nplayers, int *deck, int talkative){
 
     Stack* pile = createStack(52);
 
+    int turn = 0;
     int game=1;
     while(game==1){
         int i;
         for(i=0;i<Nplayers;i++){
+            turn++;
             int nextPlayer = i+1;
 
             if(nextPlayer==Nplayers){
@@ -121,7 +180,10 @@ int beggar(int Nplayers, int *deck, int talkative){
                     nextPlayer=0;
                 }
             }
-            printf("%d's Turn: ",nextPlayer);
+
+            if (talkative!=0){
+                talk(players,pile,Nplayers,turn,nextPlayer,i);
+            }
 
             int* reward = take_turn(players[nextPlayer],pile);
 
@@ -131,25 +193,6 @@ int beggar(int Nplayers, int *deck, int talkative){
                 enqueue(players[i],reward[j]);
                 j++;
             }
-            printf("Pile");
-            printStack(pile);
-            printf("\n");
-
-            printf("%d: ",0);
-            printQueue(players[0]);
-            printf("\n");
-
-            printf("%d: ",1);
-            printQueue(players[1]);
-            printf("\n");
-
-            printf("%d: ",2);
-            printQueue(players[2]);
-            printf("\n");
-
-            //printf("%d: ",3);
-            //printQueue(players[3]);
-            //printf("\n");
 
             free(reward);
 
@@ -162,23 +205,20 @@ int beggar(int Nplayers, int *deck, int talkative){
             i=nextPlayer-1;
         }
     }
-    printf("won");
-    return 888;
-}
+    if(talkative!=0){
+        printf("\nGame over\n");
+        printf("Final game state:\n");
+        printf("Turn %d:\n",turn);
+        printf("Pile");
+        printStack(pile);
+        printf("  <-- Top\n");
 
-int main(){
-    int deck[52];
-    int i;
-    int card = 2;
-    for(i=0;i<52;i++){
-        deck[i]=card;
-        if(card==14){
-            card=2;
-        }
-        else{
-            card++;
+        int k;
+        for(k=0;k<Nplayers;k++){
+            printf("    %d: ",k);
+            printQueue(players[k]);
+            printf("\n");
         }
     }
-    printf("\n%d",beggar(3,deck,0));
-    return 0;
+    return turn;
 }

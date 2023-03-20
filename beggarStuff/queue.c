@@ -87,6 +87,18 @@ void printQueue(Queue* q){
         printQueue(copyQueue);
     }
 }
+
+int qGetNth(Queue* q,int n){
+    if(n>q->size){
+        return -1;
+    }
+    int index = n + q->front;
+    //Checking for circling round
+    if(index>q->maxSize){
+        index = index - q->maxSize;
+    }
+    return q->elements[index];
+}
 /*
 int main()
 {
