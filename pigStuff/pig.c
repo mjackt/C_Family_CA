@@ -1,11 +1,4 @@
-#include <ctype.h>
-#include <string.h>
-#include <stdlib.h>
-
-char* pig(char*);
-int isVowel(char);
-int isY(char);
-char** sentenceToWords(char*);
+#include "pig.h"
 
 /**
  * Function checks if a char is the letter y

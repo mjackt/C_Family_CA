@@ -1,5 +1,4 @@
-#include "pig.c"
-#include <stdio.h>
+#include "test_pig.h"
 
 /**
  * Main will translate and output the preset words
@@ -12,6 +11,7 @@ int main(){
     for(i=0;i<7;i++){
         char* pigged = pig(toPig[i]);
         printf("%s => %s\n",toPig[i],pigged);
+        free(pigged);
     }
     return 0;
 }

@@ -1,13 +1,15 @@
-#include <stdio.h>
-#include "queue.c"
-#include "stack.c"
-#include "../riffleStuff/riffle.c"
+#include "beggar.h"
 
-int beggar(int,int*,int);
-int finished(Queue**,int);
-void talk(Queue**,Stack*,int,int,int,int);
-int* take_turn(Queue*, Stack*);
-
+/**
+ * Procedure takes in the current game state and prints out what the next go will look like
+ * Called when talkative != 0
+ * @param players -- The array of pointers to players hands
+ * @param pile -- Pointer to the pile
+ * @param Nplayers -- Number of players in the game
+ * @param turn -- Current turn in the game
+ * @param nextPlayer -- The next player to take their turn
+ * @param rewardee -- The player who has just gone i.e will be recieving the pile if relevant
+ */
 void talk(Queue** players,Stack* pile, int Nplayers, int turn, int nextPlayer, int rewardee){
     printf("Turn %d:\n",turn);
     printf("Pile");
@@ -26,8 +28,10 @@ void talk(Queue** players,Stack* pile, int Nplayers, int turn, int nextPlayer, i
         printf("\n");
     }
     
+    //If not paying penalty
     if(peekStack(pile)<11){
         printf("\t Player %d playing: %d\n",nextPlayer,peekQueue(players[nextPlayer]));
+        //If it will be their last card
         if(getQueueSize(players[nextPlayer])==1){
             printf("##### Player %d out of cards #####\n",nextPlayer);
         }
@@ -41,11 +45,12 @@ void talk(Queue** players,Stack* pile, int Nplayers, int turn, int nextPlayer, i
         for (i=0;i<penCount;i++){
             printf("\tPlayer %d playing: %d\n",nextPlayer,newCard);
             
-            //If they are out of cards then break
+            //If they will be out of cards then break
             if(i == players[nextPlayer]->size - 1){
                 printf("##### Player %d out of cards #####\n",nextPlayer);
                 break;
             }
+            //Will they place their own pen card
             if(newCard>10){
                 printf("\t--penalty escaped --\n");
                 escape = 1;
@@ -54,13 +59,20 @@ void talk(Queue** players,Stack* pile, int Nplayers, int turn, int nextPlayer, i
 
             newCard = qGetNth(players[nextPlayer],i+1);
         }
+    //If they didn't place their own pen card then the pile must go to the rewardee
     if(escape==0){
         printf("Pile going to player %d\n",rewardee);
     }
     }
     printf("\n");
 }
-//If -1 returned player is out
+
+/**
+ * Function performs a turn for a player and updates the respective pile and hands. It will return any cards that need to be picked up by the previous player
+ * @param players -- Pointer to player that should take their turn
+ * @param pile -- Pointer to the pile
+ * @return Pointer to array reward which contains any cards picked up from the pile. Will be empty unless penalties have been paid
+ */
 int* take_turn(Queue* player,Stack* pile){
     if (getQueueSize(player)==0){
         return NULL;
@@ -87,13 +99,13 @@ int* take_turn(Queue* player,Stack* pile){
 
     else{
         int penCount = peekStack(pile)-10;
-        //printf("Player now paying %d penatly cards\n",penCount);
         int i;
         for (i=0;i<penCount;i++){
-            //printf("\t Player playing: %d\n",newCard);
+            //playing newCard to pile
             push(pile,newCard);
+
+            //Have they escaped the penalty with their own pen card
             if(newCard>10){
-                //printf("--penalty escaped --\n");
                 int* reward = malloc(sizeof(int));
                 reward[0]=0;
                 return reward;
@@ -113,6 +125,7 @@ int* take_turn(Queue* player,Stack* pile){
         //this point means all pens have been paid and time to give reward to previous player
         int pileSize = getStackSize(pile);
         int* reward = malloc(sizeof(int)*pileSize+1);
+
         //0 acts like a null terminator to signify end of reward
         reward[pileSize]=0;
         for (i=pileSize-1;i>-1;i--){
@@ -122,10 +135,17 @@ int* take_turn(Queue* player,Stack* pile){
     }
 }
 
+/**
+ * Takes a list of pointers to players and the number of players in the game
+ * @param players -- The array of pointers to players hands
+ * @param Nplayers -- Number of players in the game
+ * @return Either a 0 or 1. 1 means the game is finished.
+ */
 int finished(Queue** players,int Nplayers){
     int i;
     int nonEmpty = 0;
     for(i=0;i<Nplayers;i++){
+        //Will tally up how many players still have cards. If > 1 then the game continues
         int handSize = getQueueSize(players[i]);
         if (handSize != 0){
             nonEmpty = nonEmpty+1;
@@ -137,6 +157,13 @@ int finished(Queue** players,int Nplayers){
     return 1;
 }
 
+/**
+ * Function plays a game of beggar your neighbour
+ * @param Nplayers -- Number of players in the game
+ * @param deck -- Pointer to an array of cards. Must be exactly 52 long.
+ * @param talkative -- If != 0 the game will be printed to terminal
+ * @return The number of turns the game took
+ */
 int beggar(int Nplayers, int *deck, int talkative){
     srand(time(NULL));
     riffle(deck,52,sizeof(int),7);
@@ -166,6 +193,8 @@ int beggar(int Nplayers, int *deck, int talkative){
     while(game==1){
         int i;
         for(i=0;i<Nplayers;i++){
+            //i will always represent the rewardee
+            //nextPlayer will always be the next player to have their turn
             turn++;
             int nextPlayer = i+1;
 
@@ -188,7 +217,9 @@ int beggar(int Nplayers, int *deck, int talkative){
             int* reward = take_turn(players[nextPlayer],pile);
 
             int j=0;
-            //0 acts as null terminator. therefore while loops until a 0 is found while adding all of the cards to the hand
+            //0 acts as a sort of null terminator in rewards. i.e if the reward is 6,5,8 the the reward array will be [6,5,8,0]
+            //Likewise an empty reward will just be [0]
+            //Therefore while loops until a 0 is found while adding all of the cards to the hand
             while(reward[j]!=0){
                 enqueue(players[i],reward[j]);
                 j++;
@@ -219,6 +250,14 @@ int beggar(int Nplayers, int *deck, int talkative){
             printQueue(players[k]);
             printf("\n");
         }
+    }
+
+    //Freeing memory from stacks and qs
+    clearStack(pile);
+    free(pile);
+    for(i=0;i<Nplayers;i++){
+        clearQueue(players[i]);
+        free(players[i]);
     }
     return turn;
 }

@@ -1,10 +1,9 @@
-#include "beggar.c"
-#include <stdio.h>
-#include <stdlib.h>
+#include "single.h"
 
 int main( int argc, char *argv[] )  {
 
     if( argc == 2 ) {
+        //Create deck
         int deck[52];
         int i;
         int card = 2;
@@ -25,4 +24,5 @@ int main( int argc, char *argv[] )  {
     else {
       printf("One argument expected.\n");
     }
+    return 0;
 }

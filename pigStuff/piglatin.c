@@ -1,10 +1,4 @@
-//IS THIS FILE MEANT TO HAVE A CAPITAL L. I CANT TELL. ASKKKKKKK
-
-#include "pig.c"
-#include <stdio.h>
-#include <string.h>
-#include <stdlib.h>
-#include <ctype.h>
+#include "piglatin.h"
 
 /**
  * Main will continuously ask for an input and output the corresponding piglatin translation until a blank line is entered
@@ -27,8 +21,9 @@ int main(void)
             return 0;
         }
 
+        int i;
         //Converts buffer string to lowercase
-        for(int i = 0; buffer[i]; i++){
+        for(i = 0; buffer[i]; i++){
             buffer[i] = tolower(buffer[i]);
         }
 
@@ -43,6 +38,7 @@ int main(void)
         while(word != NULL){
             char* pigged = pig(word);
             printf("%s ",pigged);
+            free(pigged);
             word = strtok(NULL, " ");
         }
     }

@@ -1,12 +1,4 @@
-#include <stdio.h>
-#include <stdlib.h>
-
-typedef struct StackStruct{
-        int maxSize;
-        int size;
-        int* elements;
-        int top;
-}Stack;
+#include "stack.h"
 
 Stack* createStack(int maxElements){
     Stack* s;

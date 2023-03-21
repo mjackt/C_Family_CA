@@ -1,14 +1,7 @@
-#include "beggar.c"
-
-typedef struct gameStatStruct{
-    int shortest;
-    int longest;
-    int average;
-}STATS;
-
-STATS statistics(int,int);
+#include "byn.h"
 
 STATS statistics(int Nplayers,int games){
+    //Creating deck
     int deck[52];
     int i;
     int card = 2;
@@ -22,6 +15,7 @@ STATS statistics(int Nplayers,int games){
         }
     }
 
+    //Inialising struct
     STATS gameStats;
     gameStats.longest=0;
     gameStats.shortest=2147483647;//largest c int just to be sure :)
@@ -66,4 +60,5 @@ int main( int argc, char *argv[] )  {
     else {
       printf("Two arguments expected.\n");
     }
+    return 0;
 }

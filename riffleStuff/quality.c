@@ -1,4 +1,4 @@
-#include "riffle.c"
+#include "quality.h"
 
 /**
  * main will produce the avergae quality of up to 15 shuffles and write the output to terminal and quality.txt
