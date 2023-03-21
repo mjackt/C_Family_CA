@@ -1,7 +1,7 @@
-all: program1 program2
+all: single byn
 
-program1: program1.c
-    gcc -o program1 program1.c
+single: single.c
+        gcc -o single single.c
 
-program2: program2.c
-    gcc -o program2 program2.c
+program2: byn.c
+        gcc -o byn byn.c

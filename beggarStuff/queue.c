@@ -1,14 +1,4 @@
-#include <stdio.h>
-#include <stdlib.h>
-
-typedef struct QueueStruct
-{
-    int maxSize;
-    int size;
-    int* elements;
-    int tail;
-    int front;
-}Queue;
+#include "queue.h"
 
 Queue* createQueue(int maxElements){
     Queue* Q;
@@ -49,7 +39,7 @@ int peekQueue(Queue* Q){
     return Q->elements[Q->front];
 }
 
-void enqueue(Queue *Q,int element){
+void enqueue(Queue* Q,int element){
     if(Q->size == Q->maxSize){
             printf("Queue is Full\n");
     }
@@ -73,21 +63,6 @@ int getQueueSize(Queue* q){
     return q->size;
 }
 
-void printQueue(Queue* q){
-    Queue* copyQueue = createQueue(52);
-    copyQueue->elements=q->elements;
-    copyQueue->front=q->front;
-    copyQueue->maxSize=q->maxSize;
-    copyQueue->size=q->size;
-    copyQueue->tail=q->tail;
-
-    if(copyQueue->size>0){
-        printf("%d ",peekQueue(copyQueue));
-        dequeue(copyQueue);
-        printQueue(copyQueue);
-    }
-}
-
 int qGetNth(Queue* q,int n){
     if(n>q->size){
         return -1;
@@ -99,18 +74,10 @@ int qGetNth(Queue* q,int n){
     }
     return q->elements[index];
 }
-/*
-int main()
-{
-        Queue *Q = createQueue(5);
-        enqueue(Q,1);
-        enqueue(Q,2);
-        enqueue(Q,3);
-        enqueue(Q,4);
-        printf("Front element is %d\n",peek(Q));
-        enqueue(Q,5);
-        dequeue(Q);
-        enqueue(Q,6);
-        printf("Front element is %d\n",peek(Q));
+
+void printQueue(Queue* q){
+    int i;
+    for(i=0;i<q->size;i++){
+        printf("%d ",qGetNth(q,i));
+    }
 }
-*/

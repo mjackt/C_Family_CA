@@ -1,15 +1,4 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <time.h>
-
-void riffle_once(void*, int, int, void*);
-void riffle(void*, int, int, int);
-int cmp_int(void*, void*);
-int cmp_str(void*, void*);
-int check_shuffle(void*, int, int, int (*cmp)(void*, void*));
-float quality(int*, int);
-float average_quality(int, int, int);
+#include "riffle.h"
 
 //What's this meant to return??????
 float average_quality(int N, int shuffles, int trials){
@@ -72,7 +61,7 @@ int check_shuffle(void *L, int len,int size, int (*cmp)(void *, void *)){
     void* preCopy = malloc(size*len);
     memmove(preCopy,L,size*len);
 
-    riffle(L,len,size,5);
+    riffle(L,len,size,8);
 
     void* preCopyIncrement = preCopy;
 

@@ -1,5 +1,5 @@
 #include <stdio.h>
-#include "riffle.c"
+#include "demo_shuffle.h"
 
 /**
  * Main will print the result of shuffling the two preset arrays
@@ -47,7 +47,7 @@ int main(){
     for(i=0;i<greekLen;i++){
         printf(" %s ",greek[i]);
     }
-    printf("\nResult: %d",result);
+    printf("\nResult: %d\n",result);
 
     return 0;
 }

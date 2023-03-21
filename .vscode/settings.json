@@ -1,6 +1,10 @@
 {
     "files.associations": {
         "*.embeddedhtml": "html",
-        "stdio.h": "c"
+        "stdio.h": "c",
+        "queue.c": "cpp",
+        "stack.c": "cpp",
+        "queue.h": "c",
+        "beggar.c": "cpp"
     }
 }
