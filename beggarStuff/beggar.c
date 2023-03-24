@@ -84,7 +84,7 @@ int* take_turn(Queue* player,Stack* pile){
     if (pile->size==0){
         //printf("\tPlayer playing: %d\n",newCard);
         push(pile,newCard);
-        int* reward = malloc(sizeof(int));
+        int* reward = (int*)malloc(sizeof(int));
         reward[0]=0;
         return reward;
     }
@@ -92,7 +92,7 @@ int* take_turn(Queue* player,Stack* pile){
     if (peekStack(pile)<11){
         //printf("\tPlayer playing: %d\n",newCard);
         push(pile,newCard);
-        int* reward = malloc(sizeof(int));
+        int* reward = (int*)malloc(sizeof(int));
         reward[0]=0;
         return reward;
     }
@@ -106,7 +106,7 @@ int* take_turn(Queue* player,Stack* pile){
 
             //Have they escaped the penalty with their own pen card
             if(newCard>10){
-                int* reward = malloc(sizeof(int));
+                int* reward = (int*)malloc(sizeof(int));
                 reward[0]=0;
                 return reward;
             }
@@ -124,7 +124,7 @@ int* take_turn(Queue* player,Stack* pile){
         }
         //this point means all pens have been paid and time to give reward to previous player
         int pileSize = getStackSize(pile);
-        int* reward = malloc(sizeof(int)*pileSize+1);
+        int* reward = (int*)malloc(sizeof(int)*pileSize+1);
 
         //0 acts like a null terminator to signify end of reward
         reward[pileSize]=0;

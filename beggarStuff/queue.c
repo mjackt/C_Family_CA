@@ -102,6 +102,11 @@ int qGetNth(Queue* q,int n){
     if(index>q->maxSize){
         index = index - q->maxSize;
     }
+
+    //Simple fix to bug in logic
+    if(index==52){
+        index=0;
+    }
     return q->elements[index];
 }
 
