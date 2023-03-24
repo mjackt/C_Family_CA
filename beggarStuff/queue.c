@@ -1,5 +1,10 @@
 #include "queue.h"
 
+/**
+ * Function creates a new queue struct and returns a pointer to it
+ * @param maxElements -- The max size of the queue
+ * @return The pointer to the new queue
+ */
 Queue* createQueue(int maxElements){
     Queue* Q;
     Q = (Queue *)malloc(sizeof(Queue));
@@ -13,6 +18,11 @@ Queue* createQueue(int maxElements){
     return Q;
 }
 
+/**
+ * Function removes and returns element from the front of the list
+ * @param Q -- Pointer to queue
+ * @return The dequeued int
+ */
 void dequeue(Queue* Q){
     if(Q->size==0){
         printf("Empty queue\n");
@@ -30,6 +40,11 @@ void dequeue(Queue* Q){
     return;
 }
 
+/**
+ * Function returns the value at the front of the queue
+ * @param Q -- Pointer to queue
+ * @return The int at the front
+ */
 int peekQueue(Queue* Q){
     if(Q->size==0){
         printf("Queue is Empty\n");
@@ -39,6 +54,11 @@ int peekQueue(Queue* Q){
     return Q->elements[Q->front];
 }
 
+/**
+ * Function puts a new item to the back of the queue
+ * @param Q -- Pointer to queue
+ * @param element -- New element to queue
+ */
 void enqueue(Queue* Q,int element){
     if(Q->size == Q->maxSize){
             printf("Queue is Full\n");
@@ -55,6 +75,10 @@ void enqueue(Queue* Q,int element){
     }
 }
 
+/**
+ * Procedure frees malloc mem for queue elements
+ * @param Q -- Pointer to queue
+ */
 void clearQueue(Queue* q){
     free(q->elements);
 }
@@ -63,6 +87,12 @@ int getQueueSize(Queue* q){
     return q->size;
 }
 
+/**
+ * Function returns the nth element of the queue
+ * @param Q -- Pointer to queue
+ * @param n -- Element to get
+ * @return The nth element of queue
+ */
 int qGetNth(Queue* q,int n){
     if(n>q->size){
         return -1;
@@ -75,6 +105,10 @@ int qGetNth(Queue* q,int n){
     return q->elements[index];
 }
 
+/**
+ * Procedure prints whole queue
+ * @param Q -- Pointer to queue
+ */
 void printQueue(Queue* q){
     int i;
     for(i=0;i<q->size;i++){

@@ -1,2 +1,2 @@
 #include <stdio.h>
-#include "riffle.h"
+#include "riffle.c"

@@ -1,6 +1,13 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+/**
+ * maxSize -- Max size of queue
+ * size -- Current size of queue
+ * elemenets -- Pointer to array of elements
+ * tail -- Index of the tail element
+ * front -- Index of the front element
+ */
 typedef struct QueueStruct
 {
     int maxSize;

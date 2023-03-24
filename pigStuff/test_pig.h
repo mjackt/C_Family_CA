@@ -1,2 +1,2 @@
-#include "pig.h"
+#include "pig.c"
 #include <stdio.h>

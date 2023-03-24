@@ -1,6 +1,12 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+/**
+ * maxSize -- Max size of stack
+ * size -- Current size of stack
+ * elemenets -- Pointer to array of elements
+ * top -- Index of top element
+ */
 typedef struct StackStruct{
         int maxSize;
         int size;

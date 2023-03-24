@@ -1,5 +1,10 @@
 #include "stack.h"
 
+/**
+ * Function creates a new stack struct
+ * @param maxElements -- The max size of the stack to be created
+ * @return Pointer to created stack
+ */
 Stack* createStack(int maxElements){
     Stack* s;
     s = (Stack *)malloc(sizeof(Stack));
@@ -12,6 +17,10 @@ Stack* createStack(int maxElements){
     return s;
 }
 
+/**
+ * Function takes the top element from the stack and returns it
+ * @return Int from top of the stack
+ */
 int pop(Stack* s){
     if(s->size==0){
         printf("Empty stack\n");
@@ -25,6 +34,10 @@ int pop(Stack* s){
     }
 }
 
+/**
+ * Function returns top int without popping it
+ * @return int from top of the stack
+ */
 int peekStack(Stack* s){
     if(s->size==0){
         return -1;
@@ -33,6 +46,10 @@ int peekStack(Stack* s){
     return s->elements[s->top];
 }
 
+/**
+ * Function pushes an element to the top of the stack
+ * @param int to push
+ */
 void push(Stack *s,int element){
     if(s->size == s->maxSize){
         printf("Stack is Full\n");
@@ -44,6 +61,10 @@ void push(Stack *s,int element){
     }
 }
 
+/**
+ * Frees a stacks malloced elements
+ * @param pointer to stack
+ */
 void clearStack(Stack* s){
     free(s->elements);
 }
@@ -52,6 +73,10 @@ int getStackSize(Stack* q){
     return q->size;
 }
 
+/**
+ * Procedure prints a full stack to terminal
+ * @param pointer to stack
+ */
 void printStack(Stack* s){
     int i;
     for (i=0;i<s->size;i++){
