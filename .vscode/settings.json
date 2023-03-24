@@ -5,6 +5,8 @@
         "queue.c": "cpp",
         "stack.c": "cpp",
         "queue.h": "c",
-        "beggar.c": "cpp"
-    }
+        "beggar.c": "cpp",
+        "byn.h": "c"
+    },
+    "C_Cpp.errorSquiggles": "disabled"
 }

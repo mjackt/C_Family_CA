@@ -1,5 +1,9 @@
 #include "single.h"
 
+/**
+ * Main takes 1 command line argument which is the number of players for the game
+ * The game is then played and outputs the result to the terminal
+ */
 int main( int argc, char *argv[] )  {
 
     if( argc == 2 ) {

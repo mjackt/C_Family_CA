@@ -1,6 +1,13 @@
 #include "riffle.h"
 
-//What's this meant to return??????
+/**
+ * Function measures the quality of a number of shuffles on an array
+ * 0.5 represents the most shuffled
+ * @param N -- length of array to test
+ * @param shuffles -- how many shuffles per trial
+ * @param trials -- number of trials to do
+ * @return float between 0 and 1 to measure quality
+ */
 float average_quality(int N, int shuffles, int trials){
     srand(time(NULL));
     int i;

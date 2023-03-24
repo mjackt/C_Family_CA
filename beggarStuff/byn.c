@@ -1,5 +1,11 @@
 #include "byn.h"
 
+/**
+ * Function returns statistics for a number of games from 2..N players
+ * @param Nplayers -- Max number of players in a game. (i.e it will do 2..Nplayers)
+ * @param games -- Number of games to trial each number of players
+ * @return A STATS struct containing the shortest,longest and average game length
+ */
 STATS statistics(int Nplayers,int games){
     //Creating deck
     int deck[52];
@@ -39,6 +45,10 @@ STATS statistics(int Nplayers,int games){
     return gameStats;
 }
 
+/**
+ * Main takes two command line arguments. The number of players, and the number of game trials.
+ * Then it will run the trials and output the results to the terminal
+ */
 int main( int argc, char *argv[] )  {
 
     if( argc == 3 ) {
